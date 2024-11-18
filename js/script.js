@@ -1,28 +1,35 @@
-// Can also be used with $(document).ready()
-$(window).load(function() {
-  $('.flexslider').flexslider({
-    animation: "slide"
+(function() {
+ 
+  // store the slider in a local variable
+  var $window = $(window),
+      flexslider = { vars:{} };
+ 
+  // tiny helper function to add breakpoints
+  function getGridSize() {
+    return (window.innerWidth < 600) ? 2 :
+           (window.innerWidth < 900) ? 3 : 4;
+  }
+ 
+  $(function() {
+    SyntaxHighlighter.all();
   });
-});
-
-// Can also be used with $(document).ready()
-$(window).load(function(){
-  $('#f1').flexslider({
-    animation: "slide",
-    rtl: true,
-    start: function(slider){
-      $('body').removeClass('loading');
-    }
+ 
+  $window.load(function() {
+    $('.flexslider').flexslider({
+      animation: "slide",
+      animationLoop: false,
+      itemWidth: 210,
+      itemMargin: 5,
+      minItems: getGridSize(), // use function to pull in initial value
+      maxItems: getGridSize() // use function to pull in initial value
+    });
   });
- $('#f2').flexslider({
-    animation: "slide",
-    animationLoop: false,
-    itemWidth: 210,
-    itemMargin: 5,
-    pausePlay: true,
-    mousewheel: true,
-    rtl: true,
-    asNavFor:'.flexslider'
+ 
+  // check grid size on resize event
+  $window.resize(function() {
+    var gridSize = getGridSize();
+ 
+    flexslider.vars.minItems = gridSize;
+    flexslider.vars.maxItems = gridSize;
   });
-});
-
+}());
